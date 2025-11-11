@@ -1,0 +1,162 @@
+/* Fuente y fondo general */
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background: linear-gradient(100deg, #FBECF1, #5655A1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Contenedor general (dos columnas) */
+.main-container {
+  display: flex;
+  width: 900px;
+  height: 520px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Panel de bienvenida */
+.welcome-section {
+  flex: 1;
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+              url('fototutor.jpg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.welcome-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100%;
+   /* Capa semitransparente */
+  color: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.welcome-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.welcome-section p {
+  font-size: 1rem;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.welcome-section button {
+  margin-top: 25px;
+  background: white;
+  color: #5655A1;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.welcome-section button:hover {
+  background: #e8e8e8;
+}
+
+/* Panel de login */
+.login-container {
+  flex: 1;
+  background: #ffffff;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+/* Campos del formulario */
+label {
+  display: block;
+  text-align: left;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #374151;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: #5655A1;
+  outline: none;
+}
+
+/* Botón principal */
+button {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #5655A1;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #4746a0;
+}
+
+/* Enlaces */
+.links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.links a {
+  color: #5655A1;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Mensaje de error */
+#errorMsg {
+  color: #dc2626;
+  margin-top: 15px;
+  font-size: 13px;
+  font-weight: 500;
+}

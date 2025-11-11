@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Tutor - Sistema de Tutorías</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="main-container" style="flex-direction: column; width: 800px; height: auto;">
+    <h2>Panel del Tutor</h2>
+
+    <h3>Agregar Nueva Tutoría</h3>
+    <form id="addTutoriaForm">
+      <label for="nombre_tutor">Nombre del tutor:</label>
+      <input type="text" id="nombre_tutor" placeholder="Nombre del tutor" required />
+
+      <label for="curso">Curso:</label>
+      <input type="text" id="curso" placeholder="Curso" required />
+
+      <label for="fecha">Fecha:</label>
+      <input type="date" id="fecha" required />
+
+      <button type="submit">Agregar Tutoría</button>
+    </form>
+
+    <h3>Lista de Tutorías</h3>
+    <table border="1" width="100%" id="tutoriasTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre Tutor</th>
+          <th>Curso</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="panel_tutor.js"></script>
+</body>
+</html>
