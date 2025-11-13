@@ -1,20 +1,72 @@
-\# Backend del Sistema de Tutorías
+\## 📁 Estructura del Proyecto
 
 
 
-Este proyecto gestiona el backend de una aplicación de tutorías
+```plaintext
 
-usando Python y SQLite.
+tutoria\_app
 
+├── .gitignore
 
+├── CrearNuevaTutoria/
 
-\## Archivos principales
+├── inicio\_sesion/
 
-\- app\_h.py → Archivo principal
+├── RecuperarContraseña/
 
-\- database\_connection\_h.py → Conexión a la base de datos
+├── static/
 
-\- reports\_h/ → Reportes
+│   ├── css/
+
+│   │   ├── Recupera\_contraseña.css
+
+│   │   ├── style\_inicio\_sesion.css
+
+│   │   └── style.css
+
+│   ├── img/        # Aquí van todas las imágenes del proyecto
+
+│   └── js/
+
+│       ├── panel\_admin.js
+
+│       ├── panel\_tutor.js
+
+│       ├── panel\_verificador.js
+
+│       ├── Recupera.js
+
+│       ├── Restablece.js
+
+│       ├── script\_inicio\_sesion.js
+
+│       └── Verifica.js
+
+├── templates/
+
+│   ├── index\_inicio\_sesion.html
+
+│   ├── index.html
+
+│   ├── panel\_admin.html
+
+│   ├── panel\_tutor.html
+
+│   ├── panel\_verificador.html
+
+│   ├── Recupera.html
+
+│   ├── Restablece.html
+
+│   └── Verifica.html
+
+├── venv/
+
+├── app.py          # Archivo principal del backend (Flask)
+
+├── README.md
+
+└── tutoria.db      # Base de datos principal
 
 
 
