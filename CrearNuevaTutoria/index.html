@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestión de Tutorías – Nueva Tutoría</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR IZQUIERDA -->
+    <aside class="sidebar" id="left">
+      <h2>TUTORES</h2>
+      <div class="search-row">
+        <input
+          id="search"
+          class="input"
+          type="search"
+          placeholder="Buscar por nombre…"
+          aria-label="Buscar tutor por nombre"
+        />
+        <button class="icon-btn" type="button" title="Buscar">🔎</button>
+      </div>
+      <label class="visually-hidden" for="filterCarrera">Filtrar por carrera</label>
+      <select id="filterCarrera" title="Filtrar por carrera">
+        <option value="*">Todas las carreras</option>
+      </select>
+
+      <ul id="tutorList" class="tutor-list"></ul>
+    </aside>
+
+    <!-- CALENDARIO CENTRAL -->
+    <section class="calendar-wrap" aria-label="Calendario semanal de tutorías">
+      <div class="selected-pill" id="selectedTutor">Selecciona un tutor…</div>
+
+      <div class="cal-head">
+        <button id="prevWeek" class="nav-btn" type="button" aria-label="Semana anterior">‹</button>
+        <button id="todayBtn" class="today-btn" type="button">Hoy</button>
+        <div class="month-label" id="monthLabel">Mes</div>
+        <button id="nextWeek" class="nav-btn" type="button" aria-label="Semana siguiente">›</button>
+      </div>
+
+      <!-- contenedor que permite scroll horizontal conjunto (cabecera + cuerpo) -->
+      <div class="cal-scroll">
+        <div class="days-header" id="daysHeader">
+          <!-- columna de horas -->
+          <div class="hours-label-cell"></div>
+          <!-- Días LU..DO -->
+        </div>
+
+        <div class="cal-body">
+          <div class="hours" id="hours"></div>
+          <div class="week-grid">
+            <div class="columns" id="columns"></div>
+            <div class="now-line" id="nowLine" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIDEBAR DERECHA -->
+    <aside class="details">
+      <h3>DETALLES</h3>
+
+      <div class="label">Fecha</div>
+      <input id="dateInput" class="input" type="date"/>
+
+      <div class="label">Hora (inicio)</div>
+      <input id="timeInput" class="input" type="time" step="1800" />
+
+      <div class="label">Ambiente</div>
+      <input
+        id="roomInput"
+        class="input"
+        placeholder="Ej.: Aula 201 / Lab Redes"
+      />
+
+      <button id="saveBtn" class="btn" type="button">GUARDAR</button>
+      <div id="msg" class="msg" aria-live="polite"></div>
+
+      <div class="label">Sugerencia</div>
+      <div class="hint">
+        Haz clic en una franja del calendario para autocompletar la fecha y la hora.
+      </div>
+    </aside>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

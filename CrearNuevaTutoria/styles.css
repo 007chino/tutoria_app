@@ -1,0 +1,443 @@
+:root{
+  --primary:#5655A1;
+  --bg-1:#F3F3FB;
+  --bg-2:#F8EDF5;
+  --bg-3:#FBECF1;
+  --ink:#2d2a44;
+  --muted:#7a7890;
+  --ok:#2e7d32;
+  --danger:#b3261e;
+  --hour-height:64px;  /* alto visual de 1 hora (puede cambiar por media queries) */
+  --col-gap:8px;
+  --radius-xl:16px;
+  --radius-2xl:20px;
+  --shadow:0 10px 24px rgba(86,85,161,.18);
+}
+
+/* Reset básico para mejor control de layout */
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+}
+
+html,body{
+  height:100%;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:var(--ink);
+  line-height:1.4;
+  background:
+    radial-gradient(1200px 800px at 15% -10%, var(--bg-3), transparent 60%),
+    radial-gradient(1000px 700px at 110% 10%, var(--bg-2), transparent 55%),
+    var(--bg-1);
+}
+
+/* Layout principal */
+.app{
+  display:grid;
+  grid-template-columns: 300px 1fr 340px;
+  gap:24px;
+  min-height:100vh;          /* mejor que height fija */
+  padding:24px;
+  box-sizing:border-box;
+}
+
+/* Panel izquierdo */
+.sidebar{
+  background:#fff;
+  border-radius:var(--radius-2xl);
+  box-shadow:var(--shadow);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  min-height:0;
+}
+.sidebar h2{
+  margin:4px 0 8px;
+  font-size:18px;
+  letter-spacing:.3px;
+  color:var(--primary);
+}
+.search-row{
+  display:grid;
+  grid-template-columns: 1fr 40px;
+  gap:8px;
+  align-items:center;
+}
+.input, select{
+  width:100%;
+  height:40px;
+  border-radius:14px;
+  border:1px solid #e3e3f2;
+  background:var(--bg-1);
+  padding:0 14px;
+  font-size:14px;
+  outline:none;
+  transition:.2s border-color, .2s background-color;
+}
+.input:focus, select:focus{
+  border-color:var(--primary);
+  background:#fff;
+}
+.icon-btn{
+  height:40px;
+  border:none;
+  border-radius:14px;
+  background:var(--primary);
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.tutor-list{
+  list-style:none;
+  padding:0;
+  margin:6px 0 0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  overflow:auto;
+  min-height:0;
+}
+.tutor{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid #ecebfd;
+  cursor:pointer;
+  transition:.15s transform, .2s box-shadow, .2s background-color;
+}
+.tutor:hover{
+  box-shadow:0 6px 18px rgba(86,85,161,.12);
+  transform:translateY(-1px);
+}
+.tutor.selected{
+  outline:2px solid var(--primary);
+  background:var(--bg-1);
+}
+.avatar{
+  width:28px;
+  height:28px;
+  border-radius:999px;
+  background:var(--bg-3);
+  border:1px solid #e8d8ef;
+  display:grid;
+  place-items:center;
+  color:var(--primary);
+  font-weight:700;
+  font-size:12px;
+}
+.tutor .name{
+  font-weight:600;
+}
+.tutor .meta{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* Panel central (Calendario) */
+.calendar-wrap{
+  background:#fff;
+  border-radius:var(--radius-2xl);
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:0;
+}
+.selected-pill{
+  margin:14px auto 0;
+  padding:8px 18px;
+  border-radius:999px;
+  background:var(--bg-3);
+  color:var(--primary);
+  font-weight:700;
+  font-size:14px;
+  border:1px solid #efd8e8;
+  max-width:100%;
+  text-align:center;
+}
+.cal-head{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:10px 14px 0;
+  flex-wrap:wrap;
+}
+.nav-btn, .today-btn{
+  border:none;
+  cursor:pointer;
+  height:34px;
+  padding:0 12px;
+  border-radius:999px;
+  background:var(--bg-1);
+  color:var(--primary);
+  font-weight:700;
+  white-space:nowrap;
+}
+.today-btn{
+  background:var(--primary);
+  color:#fff;
+}
+.month-label{
+  font-weight:800;
+  color:#2f2b4c;
+  font-size:18px;
+  letter-spacing:.3px;
+  margin:0 6px;
+}
+
+/* Scroll horizontal conjunto para cabecera y cuerpo */
+.cal-scroll{
+  overflow-x:auto;
+  padding:6px 14px 14px;
+}
+
+/* la rejilla de cabecera tiene un ancho mínimo para cada día,
+   permitiendo scroll horizontal en pantallas estrechas */
+.days-header{
+  display:grid;
+  grid-template-columns: 70px repeat(7, minmax(120px, 1fr));
+  gap:var(--col-gap);
+  color:var(--muted);
+  font-weight:700;
+  font-size:12px;
+  margin-bottom:6px;
+}
+.hours-label-cell{
+  /* celda vacía para alinear horas */
+}
+.days-header .day{
+  background:var(--bg-1);
+  border-radius:12px;
+  padding:8px 10px;
+  text-align:center;
+  border:1px solid #ecebfd;
+}
+.days-header .day .n{
+  display:block;
+  font-size:14px;
+  color:var(--primary);
+  margin-top:2px;
+}
+
+/* Cuerpo calendario */
+.cal-body{
+  display:grid;
+  grid-template-columns: 70px minmax(840px, 1fr);
+  gap:var(--col-gap);
+  min-height:0;
+}
+
+.hours{
+  border-right:1px dashed #e5e4f6;
+  padding-top:6px;
+}
+.hour{
+  height:var(--hour-height);
+  font-size:12px;
+  color:#9a98b5;
+  padding-right:6px;
+  text-align:right;
+}
+
+.week-grid{
+  position:relative;
+  overflow:auto;
+  border-radius:16px;
+  border:1px solid #ecebfd;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #faf9ff,
+      #faf9ff 1px,
+      #ffffff 1px,
+      #ffffff var(--hour-height)
+    );
+}
+.columns{
+  position:relative;
+  height:calc(14 * var(--hour-height)); /* 14 horas visibles (ej. 7–21) */
+  display:grid;
+  grid-template-columns: repeat(7, minmax(120px, 1fr));
+  gap:var(--col-gap);
+  padding:6px;
+  box-sizing:border-box;
+}
+.day-col{
+  position:relative;
+  border-left:1px dashed #f0effa;
+  border-right:1px dashed #f0effa;
+  border-radius:12px;
+  background:transparent;
+  cursor:crosshair;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent var(--hour-height),
+      rgba(86,85,161,.04) var(--hour-height),
+      rgba(86,85,161,.04) calc(var(--hour-height) + 1px)
+    );
+}
+.now-line{
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  background:var(--danger);
+  box-shadow:0 0 0 1px rgba(179,38,30,.08);
+}
+
+/* Evento */
+.event{
+  position:absolute;
+  left:6px;
+  right:6px;
+  border-radius:12px;
+  background:var(--bg-2);
+  border:1px solid #e9d7ef;
+  box-shadow:0 6px 16px rgba(86,85,161,.15);
+  padding:6px 8px;
+  font-size:12px;
+  overflow:hidden;
+}
+.event .title{
+  font-weight:800;
+  color:#3b3570;
+}
+.event .small{
+  font-size:11px;
+  color:#6b6990;
+}
+.event.selected-tutor{
+  background:var(--bg-3);
+  border:2px solid var(--primary);
+  color:var(--ink);
+}
+
+/* Panel derecho */
+.details{
+  background:#fff;
+  border-radius:var(--radius-2xl);
+  box-shadow:var(--shadow);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.details h3{
+  margin:0;
+  color:var(--primary);
+}
+.label{
+  font-size:13px;
+  color:var(--muted);
+  margin:6px 2px 2px;
+}
+.btn{
+  height:44px;
+  border:none;
+  border-radius:16px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:800;
+  letter-spacing:.3px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+.btn:disabled{
+  background:#c6c5ee;
+  cursor:not-allowed;
+}
+.msg{
+  font-size:12px;
+  min-height:18px;
+}
+.msg.ok{
+  color:var(--ok);
+}
+.msg.err{
+  color:var(--danger);
+}
+.hint{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* Utilidad accesibilidad */
+.visually-hidden{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  border:0;
+}
+
+/* Responsivo simple */
+@media (max-width: 1200px){
+  .app{
+    grid-template-columns: 260px 1fr;
+    grid-template-rows:auto 1fr;
+  }
+  .details{
+    grid-column:1 / -1;
+    order:3;
+  }
+}
+
+/* Tablets y pantallas medianas */
+@media (max-width: 900px){
+  .app{
+    grid-template-columns: 1fr;
+    grid-auto-rows:auto;
+  }
+  .sidebar{
+    order:2;
+  }
+  .details{
+    order:3;
+  }
+  .calendar-wrap{
+    order:1;
+  }
+}
+
+/* Móviles pequeños */
+@media (max-width: 600px){
+  :root{
+    --hour-height:52px; /* más compacto en pantallas pequeñas */
+  }
+  .app{
+    padding:12px;
+  }
+  .sidebar, .calendar-wrap, .details{
+    border-radius:var(--radius-xl);
+    box-shadow:none;
+  }
+  .cal-head{
+    justify-content:space-between;
+  }
+  .month-label{
+    font-size:16px;
+  }
+  .days-header{
+    font-size:11px;
+    grid-template-columns: 50px repeat(7, minmax(110px, 1fr));
+  }
+  .cal-body{
+    grid-template-columns: 50px minmax(770px, 1fr);
+  }
+}
