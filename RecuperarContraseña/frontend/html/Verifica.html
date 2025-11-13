@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verificación de Identidad</title>
+  <link rel="stylesheet" href="../css/Recupera_contraseña.css">
+</head>
+<body>
+  <div class="container">
+    <!-- PANEL IZQUIERDO -->
+    <div class="left">
+      <h2>VERIFICACIÓN DE<br>IDENTIDAD</h2>
+      <div class="lock-icon" aria-hidden="true">👤</div>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="right">
+      <div class="circle-icon" aria-hidden="true">🔑</div>
+      <h3>Verificación de código</h3>
+      <p id="descCodigo">Ingrese el código de verificación enviado a su correo institucional.</p>
+
+      <label for="codigo">Código de verificación</label>
+      <input 
+        type="text" 
+        id="codigo" 
+        placeholder="Ingrese el código" 
+        aria-describedby="descCodigo msg2"
+        aria-label="Código de verificación de 6 dígitos"
+        required
+      >
+
+      <!-- 🔹 Input oculto donde el JS pondrá el correo -->
+      <input type="hidden" id="emailHidden" value="">
+
+      <button type="button" onclick="verificarCodigo()">Verificar código</button>
+      <a href="index.html">Volver al inicio de sesión</a>
+      <p class="mensaje" id="msg2"></p>
+    </div>
+  </div>
+
+  <!-- Script que maneja la verificación -->
+  <script src="../js/Verifica.js"></script>
+</body>
+</html>

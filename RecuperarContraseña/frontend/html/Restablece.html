@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restablecer Contraseña</title>
+  <link rel="stylesheet" href="../css/Recupera_contraseña.css">
+
+  <!-- Font Awesome para los iconos del ojo -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+  <div class="container">
+    <!-- PANEL IZQUIERDO -->
+    <div class="left">
+      <h2>RESTABLECER<br>CONTRASEÑA</h2>
+      <div class="lock-icon" aria-hidden="true">🔓</div>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="right">
+      <div class="circle-icon" aria-hidden="true">✔</div>
+      <p id="descNewPass">
+        Ingrese una nueva contraseña y confírmela para completar el proceso de recuperación.
+      </p>
+
+      <!-- Nueva contraseña -->
+      <label for="newpass">Nueva contraseña</label>
+      <div class="password-container">
+        <input 
+          type="password" 
+          id="newpass" 
+          placeholder="Nueva contraseña"
+          aria-describedby="passwordRules msg3 descNewPass"
+          aria-label="Campo para nueva contraseña"
+          required
+        >
+        <i class="fa fa-eye toggle-pass" id="toggleNew" onclick="togglePassword('newpass', 'toggleNew')" aria-hidden="true"></i>
+      </div>
+
+      <!-- Reglas dinámicas de validación -->
+      <div class="password-rules" id="passwordRules">
+        <span id="ruleLength">• Al menos 8 caracteres</span>
+        <span id="ruleUpper">• Una letra mayúscula</span>
+        <span id="ruleNumber">• Un número</span>
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <label for="confirmpass">Confirmar contraseña</label>
+      <div class="password-container">
+        <input 
+          type="password" 
+          id="confirmpass" 
+          placeholder="Confirmar contraseña"
+          aria-label="Campo para confirmar contraseña"
+          required
+        >
+        <i class="fa fa-eye toggle-pass" id="toggleConfirm" onclick="togglePassword('confirmpass', 'toggleConfirm')" aria-hidden="true"></i>
+      </div>
+
+      <!-- Campo oculto con el email -->
+      <input type="hidden" id="emailHidden">
+
+      <button type="button" onclick="guardarNueva()">Guardar nueva contraseña</button>
+      <a href="index.html">Volver al inicio de sesión</a>
+      <p class="mensaje" id="msg3"></p>
+    </div>
+  </div>
+
+  <!-- Script al final para garantizar que todo el DOM esté cargado -->
+  <script src="../js/Restablece.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Contraseña</title>
+  <link rel="stylesheet" href="../css/Recupera_contraseña.css">
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <h2>RECUPERAR<br>CONTRASEÑA</h2>
+      <div class="lock-icon" aria-hidden="true">🔒</div>
+    </div>
+
+    <div class="right">
+      <div class="circle-icon" aria-hidden="true">?</div>
+      <h3>¿Olvidaste tu contraseña?</h3>
+      <p id="descEmail">Ingrese su correo institucional y le enviaremos un código de verificación.</p>
+
+      <label for="email">Dirección de correo institucional</label>
+      <input 
+        type="email" 
+        id="email" 
+        placeholder="Correo institucional" 
+        aria-describedby="descEmail msg1" 
+        aria-label="Correo institucional UNSAAC"
+        required
+      >
+
+      <button type="button" onclick="enviarCodigo()">Enviar código</button>
+      <a href="index.html">Volver al inicio de sesión</a>
+      <p class="mensaje" id="msg1"></p>
+    </div>
+  </div>
+  <script src="../js/Recupera.js"></script>
+</body>
+</html>
