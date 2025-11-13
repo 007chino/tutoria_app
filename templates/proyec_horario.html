@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cronograma de Tutorías — Prototipo con “pantallas”</title>
+  <style>
+    :root{
+      --primary:#5655A1; --surface:#F3F3FB; --accent-1:#F8EDF5; --accent-2:#FBECF1;
+      --text:#222; --muted:#5b5b6a; --white:#fff; --radius:16px; --shadow:0 6px 20px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;color:var(--text);background:var(--surface);line-height:1.35}
+    .app{display:grid;grid-template-columns:280px 1fr;min-height:100dvh;gap:24px;padding:24px}
+
+    /* Sidebar */
+    .sidebar{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:linear-gradient(135deg,var(--primary),#7877d5);color:#fff;font-weight:700}
+    .btn{appearance:none;border:none;background:transparent;cursor:pointer;font:inherit;color:inherit}
+    .btn-full{width:100%;padding:12px 14px;border-radius:12px;font-weight:600;transition:.2s ease}
+    .btn-primary{background:var(--primary);color:#fff;box-shadow:var(--shadow)}
+    .btn-primary:hover{filter:brightness(1.05)}
+    .semester{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #ececf7;padding:12px 14px;border-radius:12px;font-weight:600;transition:.2s ease;text-align:center}
+    .semester:hover{background:#fafaff}
+    .semester.is-active{background:var(--accent-2);border-color:#f0cfe4}
+
+    /* Main */
+    .main{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:18px;overflow:hidden}
+    .tabs{display:flex;gap:10px;border-bottom:1px solid #eee;padding-bottom:6px}
+    .tab{padding:10px 14px;border-radius:999px;font-weight:600;color:var(--muted);background:transparent;border:1px solid transparent;cursor:pointer}
+    .tab:hover{background:#f6f6fe}
+    .tab.is-active{color:var(--primary);background:var(--accent-2);border-color:#f0cfe4}
+
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .search{display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid #e7e7f4;border-radius:12px;padding:10px 12px;min-width:320px;max-width:520px;width:100%}
+    .search input{border:none;background:transparent;outline:none;flex:1;font-size:14px}
+    .actions{display:flex;gap:8px}
+    .chip{padding:8px 10px;border-radius:999px;border:1px solid #ececf7;background:var(--accent-1);font-weight:600;font-size:13px}
+    .chip--ghost{background:var(--surface)}
+    .chip--danger{background:var(--accent-2);border-color:#f0cfe4}
+
+    /* “Pantallas” del panel derecho */
+    .screens{position:relative;min-height:420px}
+    .screen{
+      position:absolute; inset:0; overflow:auto; padding-top:6px; display:none; opacity:0; transform:translateY(10px);
+      transition:opacity .25s ease, transform .25s ease;
+    }
+    .screen.active{display:block;opacity:1;transform:translateY(0)}
+
+    /* Contenido (cards/listas/tablas) */
+    .list{display:flex;flex-direction:column;gap:12px}
+    .card{background:#fff;border:1px solid #ececf7;border-radius:14px;padding:14px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;transition:.2s ease}
+    .card:hover{box-shadow:var(--shadow)}
+    .bullet{width:14px;height:14px;border-radius:50%;background:var(--primary);box-shadow:inset 0 0 0 3px #ddd8ff}
+    .title{font-weight:700}
+    .subtitle{font-size:13px;color:var(--muted)}
+    .footerbar{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;border-top:1px dashed #eee;padding-top:12px;margin-top:8px}
+
+    /* Tablas ligeras */
+    .table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    .tr{background:#fff;border:1px solid #ececf7}
+    .tr, .th, .td{padding:12px;border-left:1px solid #ececf7}
+    .tr .td:first-child,.tr .th:first-child{border-left:none;border-top-left-radius:12px;border-bottom-left-radius:12px}
+    .tr .td:last-child,.tr .th:last-child{border-top-right-radius:12px;border-bottom-right-radius:12px}
+
+    .badge{padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;background:#eef; color:#334}
+    .badge--ok{background:#e8f7ec}
+    .badge--warn{background:#fff5d9}
+    .badge--danger{background:#ffe2ea}
+
+    @media (max-width:980px){.app{grid-template-columns:1fr}}
+
+    :is(a,button,input).focus-visible,:is(a,button,input):focus{outline:3px solid #cfcdf9;outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Navegación de semestres">
+      <div class="brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" fill="white" opacity=".2"></circle>
+          <path d="M7 13l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Cronogramas
+      </div>
+      <button class="btn btn-full btn-primary" type="button" id="newSemester">+ Nuevo semestre</button>
+      <a href="#" class="semester is-active">2025-II</a>
+      <a href="#" class="semester">2025-I</a>
+      <a href="#" class="semester">2024-II</a>
+      <a href="#" class="semester">2024-I</a>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- Tabs -->
+      <nav class="tabs" role="tablist" aria-label="Secciones">
+        <button class="tab" role="tab" data-route="general">General</button>
+        <button class="tab" role="tab" data-route="tutores">Tutores</button>
+        <button class="tab" role="tab" data-route="estudiantes">Estudiantes</button>
+        <button class="tab" role="tab" data-route="reportes">Reportes</button>
+      </nav>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="#9aa" stroke-width="2"/>
+            <path d="M20 20l-3.5-3.5" stroke="#9aa" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input type="search" placeholder="Buscar… (filtra la pantalla activa)" id="q">
+        </div>
+        <div class="actions">
+          <button class="chip chip--ghost" type="button">Exportar PDF</button>
+          <button class="chip" type="button">Compartir</button>
+        </div>
+      </div>
+
+      <!-- PANTALLAS -->
+      <div class="screens" id="screens">
+        <!-- GENERAL -->
+        <section id="screen-general" class="screen">
+          <div class="list">
+            <article class="card">
+              <span class="bullet" aria-hidden="true"></span>
+              <div>
+                <div class="title">Semana 1: Registro y bienvenida</div>
+                <div class="subtitle">Charlas iniciales, alta de estudiantes y verificación de horarios.</div>
+              </div>
+              <div class="actions">
+                <button class="chip chip--ghost">Ver</button>
+                <button class="chip" data-action="edit">Editar</button>
+                <button class="chip chip--danger" data-action="delete">Eliminar</button>
+              </div>
+            </article>
+            <article class="card">
+              <span class="bullet" aria-hidden="true"></span>
+              <div>
+                <div class="title">Semana 2: Tutorías iniciales</div>
+                <div class="subtitle">Asignación de tutor y metas del primer mes.</div>
+              </div>
+              <div class="actions">
+                <button class="chip chip--ghost">Ver</button>
+                <button class="chip" data-action="edit">Editar</button>
+                <button class="chip chip--danger" data-action="delete">Eliminar</button>
+              </div>
+            </article>
+            <article class="card">
+              <span class="bullet" aria-hidden="true"></span>
+              <div>
+                <div class="title">Semana 3: Seguimiento académico</div>
+                <div class="subtitle">Checkpoints, incidencias y plan remedial.</div>
+              </div>
+              <div class="actions">
+                <button class="chip chip--ghost">Ver</button>
+                <button class="chip" data-action="edit">Editar</button>
+                <button class="chip chip--danger" data-action="delete">Eliminar</button>
+              </div>
+            </article>
+          </div>
+          <div class="footerbar">
+            <button class="chip chip--ghost" id="addWeek">+ Agregar semana</button>
+            <button class="btn btn-primary" style="padding:12px 18px;border-radius:12px;">💾 Guardar cambios</button>
+          </div>
+        </section>
+
+        <!-- TUTORES -->
+        <section id="screen-tutores" class="screen">
+          <div class="card" style="grid-template-columns:1fr auto">
+            <div>
+              <div class="title">Resumen de carga</div>
+              <div class="subtitle">Capacidad total 40, asignados 28, libres 12</div>
+            </div>
+            <div class="actions"><span class="badge badge--ok">75% ocupado</span></div>
+          </div>
+          <table class="table" id="tabla-tutores" aria-label="Tutores">
+            <thead class="tr">
+              <tr class="tr">
+                <th class="th">Tutor</th><th class="th">Correo</th><th class="th">Capacidad</th>
+                <th class="th">Asignados</th><th class="th">Disponibles</th><th class="th">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tr">
+                <td class="td"><strong>María Quispe</strong></td>
+                <td class="td">m.quispe@unsaac.edu</td>
+                <td class="td">10</td>
+                <td class="td asignados">8</td>
+                <td class="td disponibles">2</td>
+                <td class="td"><button class="chip asignar">Asignar 1</button></td>
+              </tr>
+              <tr class="tr">
+                <td class="td"><strong>Jorge Ramos</strong></td>
+                <td class="td">j.ramos@unsaac.edu</td>
+                <td class="td">12</td>
+                <td class="td asignados">6</td>
+                <td class="td disponibles">6</td>
+                <td class="td"><button class="chip asignar">Asignar 1</button></td>
+              </tr>
+              <tr class="tr">
+                <td class="td"><strong>Lucía Huamán</strong></td>
+                <td class="td">l.huaman@unsaac.edu</td>
+                <td class="td">8</td>
+                <td class="td asignados">8</td>
+                <td class="td disponibles">0</td>
+                <td class="td"><button class="chip chip--danger asignar" disabled>Lleno</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ESTUDIANTES -->
+        <section id="screen-estudiantes" class="screen">
+          <div class="actions" style="justify-content:flex-start;margin-bottom:8px">
+            <button class="chip">Filtrar: Con alerta</button>
+            <button class="chip chip--ghost">Filtrar: Sin tutor</button>
+          </div>
+          <table class="table" aria-label="Estudiantes">
+            <thead class="tr">
+              <tr class="tr">
+                <th class="th">Código</th><th class="th">Estudiante</th><th class="th">Tutor</th>
+                <th class="th">Estado</th><th class="th">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tr">
+                <td class="td">20251234</td>
+                <td class="td"><strong>Ana Paredes</strong></td>
+                <td class="td">María Quispe</td>
+                <td class="td"><span class="badge badge--ok">OK</span></td>
+                <td class="td"><button class="chip">Ver ficha</button></td>
+              </tr>
+              <tr class="tr">
+                <td class="td">20254567</td>
+                <td class="td"><strong>Diego Lazo</strong></td>
+                <td class="td">—</td>
+                <td class="td"><span class="badge badge--warn">Pendiente</span></td>
+                <td class="td"><button class="chip">Asignar tutor</button></td>
+              </tr>
+              <tr class="tr">
+                <td class="td">20257890</td>
+                <td class="td"><strong>Nadia Choque</strong></td>
+                <td class="td">Jorge Ramos</td>
+                <td class="td"><span class="badge badge--danger">Alerta</span></td>
+                <td class="td"><button class="chip">Plan remedial</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- REPORTES -->
+        <section id="screen-reportes" class="screen">
+          <div class="card" style="grid-template-columns:1fr auto">
+            <div>
+              <div class="title">Generar reporte</div>
+              <div class="subtitle">Selecciona tipo y rango para descargar.</div>
+            </div>
+            <div class="actions">
+              <select class="chip" id="tipo-reporte" aria-label="Tipo de reporte">
+                <option value="semanal">Semanal (PDF)</option>
+                <option value="mensual">Mensual (PDF)</option>
+                <option value="csv">Consolidado (CSV)</option>
+              </select>
+              <button class="chip" id="btn-descargar">Descargar</button>
+            </div>
+          </div>
+          <table class="table" aria-label="Historial de reportes">
+            <thead class="tr">
+              <tr class="tr"><th class="th">Fecha</th><th class="th">Tipo</th><th class="th">Usuario</th><th class="th">Archivo</th></tr>
+            </thead>
+            <tbody id="historial-reportes">
+              <tr class="tr">
+                <td class="td">2025-10-01</td><td class="td">Semanal</td><td class="td">admin@unsaac.edu</td>
+                <td class="td"><button class="chip chip--ghost">Abrir</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+  </div>
+<script src="./proyec_horario.js"></script>
+</body>
+</html>
