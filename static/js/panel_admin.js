@@ -1,24 +1,53 @@
+// ===============================
+// PANEL ADMIN - CARGA DE USUARIOS
+// ===============================
+
+document.addEventListener("DOMContentLoaded", () => {
+  listarUsuarios();
+});
+
 const usuariosTableBody = document.querySelector("#usuariosTable tbody");
 
 async function listarUsuarios() {
-  try {
-    const res = await fetch("http://127.0.0.1:5000/usuarios"); // Debes crear endpoint /usuarios en Flask
-    const data = await res.json();
+try {
+  // RUTA CORRECTA PARA FLASK
+  const res = await fetch("/api/usuarios");
 
-    usuariosTableBody.innerHTML = "";
-    data.forEach(usuario => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${usuario.id}</td>
-        <td>${usuario.email}</td>
-        <td>${usuario.rol}</td>
-      `;
-      usuariosTableBody.appendChild(row);
-    });
-  } catch (err) {
-    console.error("Error al cargar usuarios:", err);
+  if (!res.ok) {
+    throw new Error("No se pudo obtener la lista de usuarios");
   }
-}
 
-// Cargar usuarios al abrir la página
-listarUsuarios();
+  const data = await res.json();
+
+  usuariosTableBody.innerHTML = "";
+
+  if (data.length === 0) {
+    usuariosTableBody.innerHTML = `
+      <tr>
+        <td colspan="3" style="padding:15px; color:#777;">No hay usuarios registrados.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  data.forEach(usuario => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${usuario.id}</td>
+      <td>${usuario.email}</td>
+      <td>${usuario.rol}</td>
+    `;
+    usuariosTableBody.appendChild(row);
+  });
+
+} catch (err) {
+  console.error("Error:", err);
+  usuariosTableBody.innerHTML = `
+    <tr>
+      <td colspan="3" style="padding:15px; color:red; font-weight:bold;">
+        Error al cargar usuarios
+      </td>
+    </tr>
+  `;
+}
+}

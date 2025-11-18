@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crear Cuenta - Tutoria App</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS correcto desde Flask -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_crear_cuenta.css') }}">
+</head>
+<body>
+
+  <div class="card">
+    <!-- PANEL IZQUIERDO -->
+    <div class="panel-left">
+      <img 
+        src="{{ url_for('static', filename='img/icono-crear-cuenta.png') }}" 
+        alt="Icono Crear Cuenta" 
+        class="panel-icon"
+      >
+      <h1 class="panel-title">CREAR CUENTA</h1>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="panel-right">
+      <label class="label-rol" for="rol">SELECCIONAR ROL</label>
+      <select id="rol" class="select-rol">
+        <option value="" disabled selected>Selecciona un rol</option>
+        <option value="Estudiante">Estudiante</option>
+        <option value="Tutor">Tutor</option>
+        <option value="Administrador">Administrador</option>
+      </select>
+
+      <input id="email" class="input-field" type="email" placeholder="EMAIL" autocomplete="email" />
+      <input id="password" class="input-field" type="password" placeholder="CONTRASEÑA" autocomplete="new-password" />
+      <input id="confirm" class="input-field" type="password" placeholder="CONFIRMAR CONTRASEÑA" autocomplete="new-password" />
+
+      <button class="btn-crear" id="btn-crear">CREAR CUENTA</button>
+
+      <p id="mensaje" class="mensaje"></p>
+
+      <!-- Link para volver al inicio -->
+      <a href="{{ url_for('inicio_sesion_view') }}" class="volver-link">Volver al inicio</a>
+    </div>
+  </div>
+
+  <!-- JS correcto desde Flask -->
+  <script src="{{ url_for('static', filename='js/script_crear_cuenta.js') }}"></script>
+
+</body>
+</html>

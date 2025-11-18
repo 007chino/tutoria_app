@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recuperar Contraseña</title>
-  <link rel="stylesheet" href="../css/Recupera_contraseña.css">
+
+  <!-- CSS cargado correctamente desde Flask -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Recupera_contraseña.css') }}">
 </head>
 <body>
+
   <div class="container">
     <div class="left">
       <h2>RECUPERAR<br>CONTRASEÑA</h2>
@@ -29,10 +32,15 @@
       >
 
       <button type="button" onclick="enviarCodigo()">Enviar código</button>
-      <a href="index.html">Volver al inicio de sesión</a>
+
+      <!-- Link para volver al inicio de sesión -->
+      <a href="{{ url_for('inicio_sesion_view') }}">Volver al inicio de sesión</a>
+
       <p class="mensaje" id="msg1"></p>
     </div>
   </div>
-  <script src="../js/Recupera.js"></script>
+
+  <!-- JS cargado correctamente desde Flask -->
+  <script src="{{ url_for('static', filename='js/Recupera.js') }}"></script>
 </body>
 </html>

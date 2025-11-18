@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verificación de Identidad</title>
-  <link rel="stylesheet" href="../css/Recupera_contraseña.css">
+
+  <!-- CSS correctamente referenciado con Flask -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Recupera_contraseña.css') }}">
 </head>
 <body>
+
   <div class="container">
     <!-- PANEL IZQUIERDO -->
     <div class="left">
@@ -30,16 +33,19 @@
         required
       >
 
-      <!-- 🔹 Input oculto donde el JS pondrá el correo -->
+      <!-- Input donde tu JS pone el email -->
       <input type="hidden" id="emailHidden" value="">
 
       <button type="button" onclick="verificarCodigo()">Verificar código</button>
-      <a href="index.html">Volver al inicio de sesión</a>
+
+      <!-- Volver al inicio -->
+      <a href="{{ url_for('inicio_sesion_view') }}">Volver al inicio de sesión</a>
+
       <p class="mensaje" id="msg2"></p>
     </div>
   </div>
 
-  <!-- Script que maneja la verificación -->
-  <script src="../js/Verifica.js"></script>
+  <!-- Script JS correctamente referenciado -->
+  <script src="{{ url_for('static', filename='js/Verifica.js') }}"></script>
 </body>
 </html>

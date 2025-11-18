@@ -4,11 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inicio de Sesión - Sistema de Tutorías</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Cargar archivo CSS correctamente desde Flask -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_inicio_sesion.css') }}">
 </head>
 <body>
 
   <div class="main-container">
+
     <!-- Panel de bienvenida -->
     <div class="welcome-section">
       <div class="overlay">
@@ -35,8 +38,9 @@
         <button type="submit">Ingresar</button>
 
         <div class="links">
-          <a href="#">Recuperar contraseña</a>
-          <a href="#">Crear cuenta</a>
+          <!-- Enlaces a las vistas Flask -->
+          <a href="{{ url_for('recuperar_view') }}">Recuperar contraseña</a>
+          <a href="{{ url_for('crear_cuenta_view') }}">Crear cuenta</a>
         </div>
       </form>
 
@@ -44,6 +48,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Cargar script JS desde Flask -->
+  <script src="{{ url_for('static', filename='js/script_inicio_sesion.js') }}"></script>
 </body>
 </html>

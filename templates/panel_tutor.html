@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Tutor - Sistema de Tutorías</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- CSS correcto -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/panel_tutor.css') }}">
 </head>
+
 <body>
-  <div class="main-container" style="flex-direction: column; width: 800px; height: auto;">
+  <div class="main-container">
     <h2>Panel del Tutor</h2>
 
     <h3>Agregar Nueva Tutoría</h3>
@@ -21,11 +24,11 @@
       <label for="fecha">Fecha:</label>
       <input type="date" id="fecha" required />
 
-      <button type="submit">Agregar Tutoría</button>
+      <button type="submit" class="btn-primary">Agregar Tutoría</button>
     </form>
 
     <h3>Lista de Tutorías</h3>
-    <table border="1" width="100%" id="tutoriasTable">
+    <table id="tutoriasTable">
       <thead>
         <tr>
           <th>ID</th>
@@ -38,6 +41,7 @@
     </table>
   </div>
 
-  <script src="panel_tutor.js"></script>
+  <!-- JS correcto -->
+  <script src="{{ url_for('static', filename='js/panel_tutor.js') }}"></script>
 </body>
 </html>

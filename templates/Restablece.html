@@ -4,15 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Restablecer Contraseña</title>
-  <link rel="stylesheet" href="../css/Recupera_contraseña.css">
 
-  <!-- Font Awesome para los iconos del ojo -->
+  <!-- CSS desde Flask -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Recupera_contraseña.css') }}">
+
+  <!-- Font Awesome para iconos -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
   />
 </head>
 <body>
+
   <div class="container">
     <!-- PANEL IZQUIERDO -->
     <div class="left">
@@ -41,7 +44,7 @@
         <i class="fa fa-eye toggle-pass" id="toggleNew" onclick="togglePassword('newpass', 'toggleNew')" aria-hidden="true"></i>
       </div>
 
-      <!-- Reglas dinámicas de validación -->
+      <!-- Reglas dinámicas -->
       <div class="password-rules" id="passwordRules">
         <span id="ruleLength">• Al menos 8 caracteres</span>
         <span id="ruleUpper">• Una letra mayúscula</span>
@@ -61,16 +64,19 @@
         <i class="fa fa-eye toggle-pass" id="toggleConfirm" onclick="togglePassword('confirmpass', 'toggleConfirm')" aria-hidden="true"></i>
       </div>
 
-      <!-- Campo oculto con el email -->
+      <!-- Email oculto para JS -->
       <input type="hidden" id="emailHidden">
 
       <button type="button" onclick="guardarNueva()">Guardar nueva contraseña</button>
-      <a href="index.html">Volver al inicio de sesión</a>
+
+      <!-- Volver al inicio -->
+      <a href="{{ url_for('inicio_sesion_view') }}">Volver al inicio de sesión</a>
+
       <p class="mensaje" id="msg3"></p>
     </div>
   </div>
 
-  <!-- Script al final para garantizar que todo el DOM esté cargado -->
-  <script src="../js/Restablece.js"></script>
+  <!-- JS desde Flask -->
+  <script src="{{ url_for('static', filename='js/Restablece.js') }}"></script>
 </body>
 </html>
